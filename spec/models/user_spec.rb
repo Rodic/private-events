@@ -35,4 +35,12 @@ RSpec.describe User, :type => :model do
       expect(u.email).to eq(u.email.downcase)
     end
   end
+  
+  describe "associations" do   
+    it "allows ceration of events" do
+      user  = FactoryGirl.create(:user)
+      event = user.events.build(title: "test", location: "t", date: 1.week.from_now)
+      expect(event.creator_id).to eq(user.id)
+    end
+  end
 end

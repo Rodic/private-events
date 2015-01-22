@@ -1,0 +1,6 @@
+%ol
+  - @user.events.each do |event|
+    %li
+      %p= event.title
+      %p= event.location
+      %p= distance_of_time_in_words(Time.now, event.date)

@@ -35,7 +35,7 @@ RSpec.describe SessionsController, :type => :controller do
 
     context "unsuccessfull signin" do
       it "renders 'new' template" do
-        expect(post :create, user: {}).to render_template(:new)
+        expect(post :create, user: {}).to redirect_to(signin_path)
       end
     end
   end

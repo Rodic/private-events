@@ -46,3 +46,22 @@ Then(/^I should be on the "(.*?)" page$/) do |page_name|
     raise "Unknown page!"
   end
 end
+
+Given(/^I am logged$/) do
+  step 'I created account'
+  step 'I am on the "signin" page'
+  step 'I fill in Email with my email'
+  step 'I fill in Password with my password'
+  step 'I press "Submit"'
+end
+
+Given(/^I created followning events:$/) do |table|
+  table.raw.each do | row |
+    title, location, week = row
+    User.last.events.create(title: title, location: location, date: week.to_i.week.from_now)
+  end
+end
+
+When(/^I visit my page$/) do
+  visit user_path(User.last)
+end
