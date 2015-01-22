@@ -1,0 +1,14 @@
+= form_for [@user, @event] do |f|
+  = f.label :title
+  = f.text_field :title
+
+  = f.label :location
+  = f.text_field :location
+
+  = f.label :date
+  = f.text_field :date
+
+  = f.label :description
+  = f.text_area :description
+
+  = f.submit "Submit"

@@ -1,10 +1,12 @@
 
-Given(/^I am on the "(.*?)" page$/) do |page_name|
+Given(/^I (?:am on|visit) the "(.*?)" page$/) do |page_name|
   case page_name
   when "signup"
     visit signup_path
   when "signin"
     visit signin_path
+  when "new event"
+    visit new_user_event_path(User.last)
   else
     raise "Unknown page!"
   end

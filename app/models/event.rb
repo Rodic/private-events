@@ -11,5 +11,4 @@ class Event < ActiveRecord::Base
   def date_in_future
     errors.add(:event_in_past, "Date can't be in past") if date && date < Time.now
   end
-
 end
