@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 7 }
   
   has_many :events, foreign_key: :creator_id
+  has_many :schedules
+  has_many :attended_events, through: :schedules, source: :event
 
   has_secure_password
 end

@@ -37,10 +37,19 @@ RSpec.describe User, :type => :model do
   end
   
   describe "associations" do   
+
     it "allows ceration of events" do
       user  = FactoryGirl.create(:user)
       event = user.events.build(title: "test", location: "t", date: 1.week.from_now)
       expect(event.creator_id).to eq(user.id)
+    end
+
+    it "can add attendees to its events" do
+      user1 = FactoryGirl.create(:user)
+      user2 = FactoryGirl.create(:user, email: "second_user@private-events.com")
+      user1.events.create(FactoryGirl.attributes_for(:event))
+      user1.events.last.attendees << user2
+      expect(user1.events.last.attendees.last).to eq(user2)
     end
   end
 end
