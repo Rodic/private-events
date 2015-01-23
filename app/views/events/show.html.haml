@@ -1,0 +1,15 @@
+%h1= @event.title
+
+%table
+  %tr
+    %th Location
+    %td= @event.location
+  %tr
+    %th Date
+    %td= @event.date
+  %tr
+    %th Creator
+    %td= @event.creator.email
+  %tr
+    %th Description
+    %td= @event.description

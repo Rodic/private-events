@@ -56,9 +56,16 @@ RSpec.describe EventsController, :type => :controller do
   end
 
   describe "show" do
+
+    let(:event) { user.events.create(FactoryGirl.attributes_for(:event)) }
+
     it "renders correct template" do
-      event = user.events.create(FactoryGirl.attributes_for(:event))
       expect(get :show, id: event.id).to render_template(:show)
+    end
+
+    it "provides event to template" do
+      get :show, id: event.id
+      expect(assigns(:event)).to eq(event)
     end
   end
 end
