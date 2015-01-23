@@ -6,12 +6,12 @@ RSpec.describe EventsController, :type => :controller do
 
   describe "index" do
     it "renders correct template" do
-      expect(get :index, user_id: user.id).to render_template(:index)
+      expect(get :index).to render_template(:index)
     end
 
-    it "provides all events from specific user to template" do
-      get :index, user_id: user.id
-      expect(assigns(:events)).to eq(user.events)
+    it "provides all events to template" do
+      get :index
+      expect(assigns(:events)).to eq(Event.all)
     end
   end
 
@@ -58,7 +58,7 @@ RSpec.describe EventsController, :type => :controller do
   describe "show" do
     it "renders correct template" do
       event = user.events.create(FactoryGirl.attributes_for(:event))
-      expect(get :show, user_id: user.id, id: event.id).to render_template(:show)
+      expect(get :show, id: event.id).to render_template(:show)
     end
   end
 end
