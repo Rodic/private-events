@@ -67,3 +67,24 @@ end
 When(/^I visit my page$/) do
   visit user_path(User.last)
 end
+
+Given(/^I have created an event$/) do
+  User.last.events.create(FactoryGirl.attributes_for(:event))
+end
+
+Given(/^I added following users:$/) do |table|
+  table.raw.each do |row|
+    u = User.create(email: row[0], password: "supersecret", password_confirmation: "supersecret")
+    Event.last.attendees << u
+  end
+end
+
+When(/^I visit event page$/) do
+  visit event_path(Event.last)
+end
+
+Then(/^I should see following users:$/) do |table|
+  table.raw.each do |row|
+    expect(page).to have_content(row[0])
+  end
+end

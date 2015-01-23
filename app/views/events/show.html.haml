@@ -13,3 +13,7 @@
   %tr
     %th Description
     %td= @event.description
+
+%ul
+  - @event.attendees.each do |attendee|
+    %li= attendee.email
