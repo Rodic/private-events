@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :attended_events, through: :schedules, source: :event
   has_many :invitations, foreign_key: :recipient_id
 
+  has_secure_password
+
   def upcoming_events
     self.attended_events.upcoming
   end
@@ -20,5 +22,4 @@ class User < ActiveRecord::Base
   def previous_events
     self.attended_events.past
   end
-  has_secure_password
 end

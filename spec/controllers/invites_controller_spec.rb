@@ -57,5 +57,4 @@ RSpec.describe InvitesController, :type => :controller do
       expect{Invitation.find(invite.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
-
 end
