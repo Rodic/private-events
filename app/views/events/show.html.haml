@@ -14,6 +14,11 @@
     %th Description
     %td= @event.description
 
+= form_tag(event_invites_path(@event)) do
+  = label_tag :email, "Send invitation to:"
+  = text_field_tag(:email)
+  = submit_tag "Send"
+
 %ul
   - @event.attendees.each do |attendee|
     %li= attendee.email

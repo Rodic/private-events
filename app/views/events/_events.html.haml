@@ -1,0 +1,11 @@
+%ul
+  - events.each do |event|
+    %li
+      %p= link_to(event.title, event)
+      %p= event.location
+      %p
+        - if event.date < Time.now
+          before
+        - else
+          in
+        = distance_of_time_in_words(Time.now, event.date)

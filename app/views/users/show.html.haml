@@ -1,6 +1,16 @@
+%h2 My Events
+= render partial: "events/events", locals: { events: @user.events }
+
+%h2 Events to attend
+= render partial: "events/events", locals: { events: @user.upcoming_events }
+
+%h2 Past events
+= render partial: "events/events", locals: { events: @user.previous_events }
+
+%h2 My invitations
 %ol
-  - @user.events.each do |event|
+  - @user.invitations.each do |invitation|
     %li
-      %p= event.title
-      %p= event.location
-      %p= distance_of_time_in_words(Time.now, event.date)
+      = invitation.event.title
+      = link_to("Accept",  accept_invite_path(invitation))
+      = link_to("Decline", decline_invite_path(invitation))

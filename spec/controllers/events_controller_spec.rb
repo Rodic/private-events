@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe EventsController, :type => :controller do
 
   let(:user) { FactoryGirl.create(:user) }
-
+  
   describe "index" do
     it "renders correct template" do
       expect(get :index).to render_template(:index)
@@ -11,11 +11,17 @@ RSpec.describe EventsController, :type => :controller do
 
     it "provides all events to template" do
       get :index
-      expect(assigns(:events)).to eq(Event.all)
+      expect(assigns(:past_events)).to be_kind_of(ActiveRecord::Relation)
+      expect(assigns(:upcoming_events)).to be_kind_of(ActiveRecord::Relation)
     end
   end
 
   describe "new" do
+
+    before do
+      session[:user_id] = user.id
+    end
+
     it "renders correct template" do
       expect(get :new, user_id: user.id).to render_template(:new)
     end
@@ -27,6 +33,10 @@ RSpec.describe EventsController, :type => :controller do
   end
 
   describe "create" do
+
+    before do
+      session[:user_id] = user.id
+    end
     
     context "valid event params" do
 

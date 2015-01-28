@@ -1,3 +1,15 @@
+%h2 Upcoming events
 %ul
-  - @events.each do |event|
-    %li= link_to(event.title, event_path(event))
+  - @upcoming_events.each do |event|
+    %li
+      = link_to(event.title, event_path(event))
+      by
+      = event.creator.email
+
+%h2 Past events
+%ul
+  - @past_events.each do |event|
+    %li
+      = link_to(event.title, event_path(event))
+      by
+      = event.creator.email

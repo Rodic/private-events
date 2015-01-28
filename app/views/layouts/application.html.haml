@@ -7,6 +7,17 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    
+    %ul
+      %li= link_to("Home", root_path)
+      - if current_user.nil?
+        %li= link_to("Signin", signin_path)
+        %li= link_to("Signup", signup_path)
+      - else
+        %li= link_to("Create new event", new_user_event_path(current_user))
+        %li= link_to(current_user.email, current_user)
+        %li= link_to("Signout", signout_path)
+
     - flash.each do | key, msg |
       %p= msg
     = yield

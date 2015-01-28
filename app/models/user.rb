@@ -11,6 +11,14 @@ class User < ActiveRecord::Base
   has_many :events, foreign_key: :creator_id
   has_many :schedules
   has_many :attended_events, through: :schedules, source: :event
+  has_many :invitations, foreign_key: :recipient_id
 
+  def upcoming_events
+    self.attended_events.upcoming
+  end
+  
+  def previous_events
+    self.attended_events.past
+  end
   has_secure_password
 end

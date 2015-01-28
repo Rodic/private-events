@@ -4,12 +4,18 @@ Rails.application.routes.draw do
     resources :events, only: [ :new, :create ]
   end
 
-  resources :events, only: [ :index, :show ]
+  resources :events, only: [ :index, :show ] do
+    resources :invites, only: [ :create ]
+  end
 
-  resources :sessions, only: [ :new, :create, :destroy ]
+  resources :sessions, only: [ :new, :create ]
 
-  get "/signup" => "users#new"
-  get "/signin" => "sessions#new"
+  get "/signup"  => "users#new"
+  get "/signin"  => "sessions#new"
+  get "/signout" => "sessions#destroy"
+
+  get "/invites/accept/:id"  => "invites#accept",  as: "accept_invite"
+  get "/invites/decline/:id" => "invites#decline", as: "decline_invite"
 
   root "events#index"
 

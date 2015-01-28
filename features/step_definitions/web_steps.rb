@@ -60,7 +60,7 @@ end
 Given(/^I created followning events:$/) do |table|
   table.raw.each do | row |
     title, location, week = row
-    User.last.events.create(title: title, location: location, date: week.to_i.week.from_now)
+    User.last.events.create!(title: title, location: location, date: week.to_i.week.from_now)
   end
 end
 
@@ -87,4 +87,34 @@ Then(/^I should see following users:$/) do |table|
   table.raw.each do |row|
     expect(page).to have_content(row[0])
   end
+end
+
+Given(/^I am invited to following events:$/) do |table|
+  table.raw.each do |row|
+    title, location, date = row
+    e = Event.new(title: title, location: location, date: date.to_i.week.from_now)
+    User.last.attended_events << e
+  end
+end
+
+Given(/^user "(.*?)" exists$/) do |email|
+  FactoryGirl.create(:user, email: email)
+end
+
+Given(/^I created event "(.*?)"$/) do |title|
+  user = FactoryGirl.create(:user)
+  user.events.create(title: title, location: "my place", date: 1.week.from_now)
+end
+
+When(/^I visit the "(.*?)" event page$/) do |title|
+  visit event_path(Event.find_by_title(title))
+end
+
+Then(/^user "(.*?)" should have invitation to "(.*?)"$/) do |email, title|
+  expect(User.find_by_email(email).invitations.last.event.title).to eq(title)
+end
+
+Given(/^I am invited to "(.*?)"$/) do |title|
+  event = FactoryGirl.create(:event, title: title)
+  event.invitations.create(recipient_id: User.last.id)
 end

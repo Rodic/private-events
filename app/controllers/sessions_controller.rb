@@ -13,4 +13,10 @@ class SessionsController < ApplicationController
       redirect_to signin_path
     end
   end
+
+  def destroy
+    session.delete(:user_id)
+    flash[:notice] = "You are logged out"
+    redirect_to root_path
+  end
 end

@@ -51,5 +51,30 @@ RSpec.describe User, :type => :model do
       user1.events.last.attendees << user2
       expect(user1.events.last.attendees.last).to eq(user2)
     end
+
+    it "has many invites" do
+      user  = FactoryGirl.create(:user)
+      event = FactoryGirl.create(:event)
+      invitation = event.invitations.create(event_id: event.id, recipient_id: user.id)
+      
+      expect(user.invitations).to eq([invitation])
+    end
+  end
+
+  describe "scopes" do
+    
+    it "can query db for past events" do
+      user = FactoryGirl.create(:user)
+      event1 = FactoryGirl.create(:event)
+      event2 = FactoryGirl.create(:event, title: "Another event")
+      event3 = FactoryGirl.create(:event, date: 1.week.ago)
+      events = [ event1, event2, event3 ]
+      user.attended_events << events
+
+      expect(user.attended_events).to eq(events)
+
+      expect(user.upcoming_events).to eq([event1, event2])
+      expect(user.previous_events).to eq([event3])
+    end
   end
 end

@@ -19,5 +19,7 @@ group :test, :development do
   gem 'cucumber-rails',     '1.4.2', require: false
   gem 'factory_girl_rails', '4.5.0'
   gem 'database_cleaner',   '1.4.0'
+  gem 'rails-footnotes',    '4.1.4'
+  gem 'faker',              '1.4.3'
 end
 

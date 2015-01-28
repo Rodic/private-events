@@ -1,7 +1,10 @@
 class EventsController < ApplicationController
+  
+  before_action :correct_user, only: [ :new, :create ]
 
   def index
-    @events = Event.all
+    @past_events     = Event.past.includes(:creator)
+    @upcoming_events = Event.upcoming.includes(:creator)
   end
 
   def new
@@ -26,7 +29,11 @@ class EventsController < ApplicationController
 
   private
   
-  def events_params
-    params.require(:event).permit(:title, :location, :date, :description)
-  end
+    def events_params
+      params.require(:event).permit(:title, :location, :date, :description)
+    end
+    
+    def correct_user
+      redirect_to signin_path unless session[:user_id].to_i == params[:user_id].to_i
+    end
 end
