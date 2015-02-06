@@ -23,3 +23,6 @@ group :test, :development do
   gem 'faker',              '1.4.3'
 end
 
+group :development do
+  gem 'letter_opener', '1.3.0'
+end

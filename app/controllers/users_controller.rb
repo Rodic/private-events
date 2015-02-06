@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      UsersMailer.thank_you(@user).deliver!
       session[:user_id] = @user.id
       flash[:success] = "Registration has been successfull."
       redirect_to @user
